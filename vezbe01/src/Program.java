@@ -1,12 +1,7 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /* Implementirati klasu 'Karta' sa osobinama 'boja' i 'rang' koje predstavljaju
  * standardne osobine karata klasicnog spila od 52+2 karte.
