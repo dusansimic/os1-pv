@@ -46,30 +46,7 @@ class Karta {
 	}
 	
 	enum Rang {
-		R2       (2),
-		R3       (3),
-		R4       (4),
-		R5       (5),
-		R6       (6),
-		R7       (7),
-		R8       (8),
-		R9       (9),
-		R10      (10),
-		KEC      (11),
-		ZANDAR   (12),
-		KRALJICA (13),
-		KRALJ    (14),
-		DZOKER   (15);
-		
-		private int rang;
-
-		Rang(int rang) {
-			this.rang = rang;
-		}
-		
-		public int getRang() {
-			return rang;
-		}
+		R2, R3, R4, R5, R6, R7, R8, R9, R10, ZANDAR, KRALJICA, KRALJ, KEC, DZOKER
 	}
 
 	private Boja boja;
@@ -196,23 +173,32 @@ public class Program {
 		boolean hasWinner = false;
 		
 		do {
-			igraci.stream().forEach(i -> i.vuci(spil));
-			
 			System.out.println("Rezultati izvlacenja:");
-			for (Igrac igrac : igraci) {
-				System.out.println(igrac);
+
+			igraci.get(igraci.size() - 1).vuci(spil);
+			System.out.println(igraci.get(igraci.size() - 1));
+			Karta.Rang max = igraci.get(igraci.size() - 1).getKarta().getRang();
+
+			for (int i = igraci.size() - 2; i >= 0; i--) {
+				igraci.get(i).vuci(spil);
+				System.out.println(igraci.get(i));
+
+				if (igraci.get(i).getKarta().getRang().compareTo(max) > 0) {
+					max = igraci.get(i).getKarta().getRang();
+
+					for (int j = igraci.size() - 1; j > i; j--) {
+						igraci.remove(j);
+					}
+				} else if (igraci.get(i).getKarta().getRang().compareTo(max) < 0) {
+					igraci.remove(i);
+				}
 			}
 			System.out.println();
-
-			Karta.Rang max = igraci.stream().map(i -> i.getKarta().getRang()).max(Comparator.naturalOrder()).get();
-
-			List<Igrac> pobednici = igraci.stream().filter(i -> i.getKarta().getRang() == max).collect(Collectors.toList());
 			
-			if (pobednici.size() == 1) {
-				System.out.println(pobednici.get(0));
+			if (igraci.size() == 1) {
+				System.out.print("Pobednik: ");
+				System.out.println(igraci.get(0));
 				hasWinner = true;
-			} else {
-				igraci = pobednici;
 			}
 		} while (!hasWinner);
 	}
