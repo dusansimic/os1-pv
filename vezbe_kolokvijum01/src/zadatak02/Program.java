@@ -60,14 +60,21 @@ class Pecurkas extends Thread {
 
 	@Override
 	public void run() {
+		int[] pecurke = new int[20];
+
 		for (int i = 0; i < 20; i++) {
 			if (interrupted()) {
 				kamp.vratiIzvidjaca();
 				kamp.cekajOstale();
 				return;
 			}
-			kamp.donesiPecurke(suma.traziPecurke());
+			pecurke[i] = suma.traziPecurke();
 		}
+
+		for (int p : pecurke) {
+			kamp.donesiPecurke(p);
+		}
+
 		kamp.vratiIzvidjaca();
 		kamp.cekajOstale();
 	}
@@ -86,9 +93,16 @@ class Drvar implements Runnable {
 
 	@Override
 	public void run() {
+		int[] drva = new int[25];
+
 		for (int i = 0; i < 25; i++) {
-			kamp.donesiDrva(suma.traziDrva());
+			drva[i] = suma.traziDrva();
 		}
+
+		for (int d : drva) {
+			kamp.donesiDrva(d);
+		}
+
 		kamp.vratiIzvidjaca();
 		kamp.cekajOstale();
 	}
